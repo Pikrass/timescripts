@@ -74,10 +74,7 @@ var newpixConvertor = {
 
 		var reg = /UTC (-|\+) (\d+)(?::(\d{2}))? hour/;
 		var m = text.match(reg);
-		if(m == null) {
-			offset = 0;
-		}
-		else {
+		if(m != null) {
 			offset.np = (m[1] == '+' ? parseInt(m[2]) : -parseInt(m[2]));
 			if(m[3] != undefined)
 				offset.fnp = (m[1] == '+' ? parseInt(m[3]) : -parseInt(m[3]));
