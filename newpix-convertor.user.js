@@ -23,7 +23,7 @@ var newpixConvertor = {
 
 			var realDate = t.dateToNewpix(hereticDate);
 
-			if(realDate > 0)
+			if(realDate >= 0)
 				authors[i].lastChild.data = ' » newpix '+t.npToString(realDate);
 			else
 				authors[i].lastChild.data = ' » newpix '+t.npToString(-realDate)+' B.T.';
