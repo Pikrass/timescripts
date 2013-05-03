@@ -4,7 +4,10 @@
 // @author Pikrass
 // @include http://forums.xkcd.com/viewtopic.php*
 // @include http://fora.xkcd.com/viewtopic.php*
+// @include http://forums.xkcd.com/posting.php*
+// @include http://fora.xkcd.com/posting.php*
 // ==/UserScript==
+// Depends on: locusts
 
 var newpixConvertor = {
 	// Change this according to your preference
