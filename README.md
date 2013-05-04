@@ -17,7 +17,7 @@ hour, and the successive frames tell a story.
 This comic have gathered a whole community - no, a whole culture ! - talking in
 the [One True Thread](http://forums.xkcd.com/viewtopic.php?f=7&t=101043).
 
-You can find more on the Thrad itself, or in the dedicated
+You can find more on the Thread itself, or in the dedicated
 [wiki](http://xkcd-time.wikia.com/wiki/XKCD_Time_Wiki).
 
 
