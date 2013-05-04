@@ -52,5 +52,5 @@ Firefox and Chrome : to install each script separately, you can use these links.
 Gallery
 -------
 
-![the newpix convertor](imgs/newpix-convertor.png)
-![the spoiler detector](imgs/spoiler-detector.png)
+![the newpix convertor](doc/newpix-convertor.png)
+![the spoiler detector](doc/spoiler-detector.png)
