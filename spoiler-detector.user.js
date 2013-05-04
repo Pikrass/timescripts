@@ -2,6 +2,7 @@
 // @name Time spoiler detector
 // @description Hides away spoilers for blitzers
 // @author Pikrass
+// @version 1094
 // @include http://forums.xkcd.com/viewtopic.php*
 // @include http://fora.xkcd.com/viewtopic.php*
 // @include http://forums.xkcd.com/posting.php*

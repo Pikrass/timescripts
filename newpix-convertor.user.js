@@ -2,6 +2,7 @@
 // @name Newpix convertor
 // @description Converts phpBB dates into the One Time Unit: the newpix.
 // @author Pikrass
+// @version 1092
 // @include http://forums.xkcd.com/viewtopic.php*
 // @include http://fora.xkcd.com/viewtopic.php*
 // @include http://forums.xkcd.com/posting.php*

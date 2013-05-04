@@ -2,6 +2,7 @@
 // @name Multiquote for the One True Forum
 // @description Changes quote buttons behaviour to quote multiple messages
 // @author Pikrass
+// @version 1094
 // @resource quote_waiting imgs/quote_waiting.png
 // @resource quote_ok imgs/quote_ok.png
 // @include http://forums.xkcd.com/viewtopic.php*
