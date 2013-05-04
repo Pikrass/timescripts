@@ -32,6 +32,8 @@ The Scripts
    quote button, the message is retrieved in the background. The next time
    you'll want to post a new message, all quotes are added to the textarea. When
    you preview, save or submit your message, the quote cache is flushed.
+ * Clever spoiler: add an extra Hide button at the bottom of the spoiler content
+   when unfold.
 
 
 Installation
@@ -40,7 +42,7 @@ Installation
 Firefox : be sure to have
 [Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/) installed
 and click on [this link](http://88.191.116.37/xkcd/timescripts.user.js). This
-will download all three scripts.
+will download all four scripts.
 
 Chrome : install [Tampermonkey](http://tampermonkey.net/) and install each
 script separately.
@@ -49,6 +51,7 @@ Firefox and Chrome : to install each script separately, you can use these links.
  * [Newpix convertor](http://88.191.116.37/xkcd/newpix-convertor.user.js)
  * [Spoiler detector](http://88.191.116.37/xkcd/spoiler-detector.user.js)
  * [Multiquote](http://88.191.116.37/xkcd/multiquote.user.js)
+ * [Clever spoiler](http://88.191.116.37/xkcd/clever-spoiler.user.js)
 
 
 Gallery
