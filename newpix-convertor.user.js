@@ -7,29 +7,27 @@
 // @include http://forums.xkcd.com/posting.php*
 // @include http://fora.xkcd.com/posting.php*
 // ==/UserScript==
-// Depends on: locusts
 
-var newpixConvertor = {
+newpixConvertor = {
 	// Change this according to your preference
 	decimals: 2,
 
 	convert: function() {
 		var authors = document.getElementsByClassName('author');
 		var i;
-		var t = newpixConvertor;
 
 		for(i=0 ; i < authors.length ; i++) {
 			var hereticDate = new Date(authors[i].lastChild.data.substr(3));
-			var off = t.getUtcOffset();
+			var off = this.getUtcOffset();
 			hereticDate.setHours(hereticDate.getHours() - off.np);
 			hereticDate.setMinutes(hereticDate.getMinutes() - off.fnp);
 
-			var realDate = t.dateToNewpix(hereticDate);
+			var realDate = this.dateToNewpix(hereticDate);
 
 			if(realDate >= 0)
-				authors[i].lastChild.data = ' » newpix '+t.npToString(realDate);
+				authors[i].lastChild.data = ' » newpix '+this.npToString(realDate);
 			else
-				authors[i].lastChild.data = ' » newpix '+t.npToString(-realDate)+' B.T.';
+				authors[i].lastChild.data = ' » newpix '+this.npToString(-realDate)+' B.T.';
 		}
 	},
 
@@ -61,11 +59,11 @@ var newpixConvertor = {
 			dec = str.length - dot - 1;
 		}
 
-		while(dec < newpixConvertor.decimals) {
+		while(dec < this.decimals) {
 			str += '0';
 			dec++;
 		}
-		str = str.substr(0, str.length - (dec - newpixConvertor.decimals));
+		str = str.substr(0, str.length - (dec - this.decimals));
 
 		return str;
 	},
@@ -91,4 +89,4 @@ var newpixConvertor = {
 };
 
 if(location.search.indexOf('f=7') != -1 && location.search.indexOf('t=101043') != -1)
-	window.addEventListener('DOMContentLoaded', newpixConvertor.convert);
+	window.addEventListener('DOMContentLoaded', newpixConvertor.convert.bind(newpixConvertor));
