@@ -11,7 +11,6 @@
 spoilerDetector = {
 	detect: function() {
 		var imgs = document.getElementsByTagName('img');
-		console.log(imgs.length);
 		var i;
 		for(i=0 ; i<imgs.length ; i++) {
 			if(imgs[i].src == 'http://imgs.xkcd.com/comics/time.png') {
