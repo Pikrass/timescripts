@@ -28,9 +28,10 @@ The Scripts
    Unit, the newpix.
  * Spoiler detector: detects whenever the dynamic link to the current image is
    posted on the thread.
-
-I also plan on writing a third script allowing users to quote multiple messages
-easily.
+ * Multiquote: allows you to quote several messages easily. When you hit the
+   quote button, the message is retrieved in the background. The next time
+   you'll want to post a new message, all quotes are added to the textarea. When
+   you preview, save or submit your message, the quote cache is flushed.
 
 
 Installation
@@ -47,6 +48,7 @@ script separately.
 Firefox and Chrome : to install each script separately, you can use these links.
  * [Newpix convertor](http://88.191.116.37/xkcd/newpix-convertor.user.js)
  * [Spoiler detector](http://88.191.116.37/xkcd/spoiler-detector.user.js)
+ * [Multiquote](http://88.191.116.37/xkcd/multiquote.user.js)
 
 
 Gallery
