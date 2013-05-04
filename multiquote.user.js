@@ -2,6 +2,8 @@
 // @name Multiquote for the One True Forum
 // @description Changes quote buttons behaviour to quote multiple messages
 // @author Pikrass
+// @resource quote_waiting imgs/quote_waiting.png
+// @resource quote_ok imgs/quote_ok.png
 // @include http://forums.xkcd.com/viewtopic.php*
 // @include http://fora.xkcd.com/viewtopic.php*
 // @include http://forums.xkcd.com/posting.php*
@@ -22,12 +24,13 @@ multiquote = {
 
 	quote: function(link) {
 		var req = new XMLHttpRequest();
-		req.addEventListener('load', this.addQuote.bind(this, req));
+		req.addEventListener('load', this.addQuote.bind(this, req, link));
 		req.open('get', link.quoteUrl, true);
 		req.send();
+		link.style.backgroundImage = 'url("'+GM_getResourceURL('quote_waiting')+'")';
 	},
 
-	addQuote: function(req) {
+	addQuote: function(req, link) {
 		var areaPos = req.responseText.indexOf('<textarea name="message" id="message"');
 		var beg = req.responseText.indexOf('[quote', areaPos)
 		var end = req.responseText.indexOf('</textarea>', beg);
@@ -40,6 +43,7 @@ multiquote = {
 			quote += "\n\n\n"+str;
 
 		GM_setValue('quoteText', quote);
+		link.style.backgroundImage = 'url("'+GM_getResourceURL('quote_ok')+'")';
 	},
 
 	dumpQuotes: function() {
