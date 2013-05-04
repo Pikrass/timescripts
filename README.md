@@ -4,6 +4,7 @@ User scripts for the Waiters of Time, the One True Comic
 These scripts enhance the wonderful experience of Waiters by tweaking some bits
 of the pages of the One True Thread.
 
+
 Wtf is that?
 ------------
 
@@ -19,16 +20,18 @@ the [One True Thread](http://forums.xkcd.com/viewtopic.php?f=7&t=101043).
 You can find more on the Thrad itself, or in the dedicated
 [wiki](http://xkcd-time.wikia.com/wiki/XKCD_Time_Wiki).
 
+
 The Scripts
 -----------
 
  * Newpix convertor: converts those old heretic message dates into the One Time
-   Unit, the newpix
+   Unit, the newpix.
  * Spoiler detector: detects whenever the dynamic link to the current image is
-   posted on the thread
+   posted on the thread.
 
 I also plan on writing a third script allowing users to quote multiple messages
 easily.
+
 
 Installation
 ------------
@@ -44,3 +47,10 @@ script separately.
 Firefox and Chrome : to install each script separately, you can use these links.
  * [Newpix convertor](http://88.191.116.37/xkcd/newpix-convertor.user.js)
  * [Spoiler detector](http://88.191.116.37/xkcd/spoiler-detector.user.js)
+
+
+Gallery
+-------
+
+![the newpix convertor](imgs/newpix-convertor.png)
+![the spoiler detector](imgs/spoiler-detector.png)
