@@ -44,7 +44,7 @@ newpixConvertor = {
 		if(np >= 0)
 			return np + 1;
 		else
-			return -np;
+			return np - 1;
 	},
 
 	npToString: function(np) {
