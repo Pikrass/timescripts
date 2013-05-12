@@ -2,7 +2,8 @@
 // @name Newpix convertor
 // @description Converts phpBB dates into the One Time Unit: the newpix.
 // @author Pikrass
-// @version 1092
+// @author Smithers
+// @version 1220
 // @include http://forums.xkcd.com/viewtopic.php*
 // @include http://fora.xkcd.com/viewtopic.php*
 // @include http://forums.xkcd.com/posting.php*
@@ -14,22 +15,47 @@ newpixConvertor = {
 	decimals: 2,
 
 	convert: function() {
+		var i, j;
+
+		// Convert original post times.
 		var authors = document.getElementsByClassName('author');
-		var i;
-
-		for(i=0 ; i < authors.length ; i++) {
-			var hereticDate = new Date(authors[i].lastChild.data.substr(3));
-			var off = this.getUtcOffset();
-			hereticDate.setHours(hereticDate.getHours() - off.np);
-			hereticDate.setMinutes(hereticDate.getMinutes() - off.fnp);
-
-			var realDate = this.dateToNewpix(hereticDate);
-
-			if(realDate >= 0)
-				authors[i].lastChild.data = ' » newpix '+this.npToString(realDate);
-			else
-				authors[i].lastChild.data = ' » newpix '+this.npToString(-realDate)+' B.T.';
+		for (i = 0; i < authors.length; i++) {
+			authors[i].lastChild.data = ' » ' + this.hereticToReal(authors[i].lastChild.data.substr(3));
 		}
+
+		// Convert "last edited" times.
+		var edits = document.getElementsByClassName('notice');
+		for (i = 0; i < edits.length; i++) {
+			var str = edits[i].lastChild.data;
+			var comma = str.indexOf(',');
+			edits[i].lastChild.data = ' at ' + this.hereticToReal(str.substr(4, comma-4)) + str.substr(comma);
+		}
+
+		// Convert joined dates.
+		var profiles = document.getElementsByClassName('postprofile');
+		for (i = 0; i < profiles.length; i++) {
+			for (j = 0; j < profiles[i].childNodes.length; j++) {
+				var node = profiles[i].childNodes[j];
+				if (node.localName == 'dd' && node.firstChild.outerHTML == '<strong>Joined:</strong>') {
+					node.lastChild.data = ' ' + this.hereticToReal(node.lastChild.data.substr(1));
+					break;
+				}
+			}
+		}
+	},
+
+	hereticToReal: function(hereticString) {
+		var hereticDate = new Date(hereticString);
+		var off = this.getUtcOffset();
+		hereticDate.setHours(hereticDate.getHours() - off.np);
+		hereticDate.setMinutes(hereticDate.getMinutes() - off.fnp);
+
+		var realDate = this.dateToNewpix(hereticDate);
+
+		if (realDate >= 0)
+			return 'newpix ' + this.npToString(realDate);
+		else
+			return 'newpix ' + this.npToString(-realDate) + ' B.T.';
 	},
 
 	dateToNewpix: function(date) {
