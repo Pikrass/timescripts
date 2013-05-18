@@ -29,9 +29,10 @@ The Scripts
  * Spoiler detector: detects whenever the dynamic link to the current image is
    posted on the thread.
  * Multiquote: allows you to quote several messages easily. When you hit the
-   quote button, the message is retrieved in the background. The next time
-   you'll want to post a new message, all quotes are added to the textarea. When
-   you preview, save or submit your message, the quote cache is flushed.
+   quote button, the message is retrieved in the background and a text field
+   appears so you can write your reply. The next time you'll want to post a new
+   message, all quotes and replies are added to the textarea. When you preview,
+   save or submit your message, the quote cache is flushed.
  * Clever spoiler: add an extra Hide button at the bottom of the spoiler content
    when unfold.
 
@@ -59,3 +60,4 @@ Gallery
 
 ![the newpix convertor](doc/newpix-convertor.png)
 ![the spoiler detector](doc/spoiler-detector.png)
+![multiquote](doc/multiquote.png)
