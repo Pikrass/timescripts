@@ -2,7 +2,7 @@
 // @name Clever spoiler
 // @description Enhances phpBB's spoiler tags on the OTF
 // @author Pikrass
-// @version 1097
+// @version 1672
 // @include http://forums.xkcd.com/viewtopic.php*
 // @include http://fora.xkcd.com/viewtopic.php*
 // @include http://forums.xkcd.com/posting.php*
@@ -23,13 +23,14 @@ var cleverSpoiler = {
 		var i;
 		for(i=0 ; i < spoilers.length ; i++) {
 			var newButton = divHide.cloneNode(true);
-			newButton.firstChild.addEventListener('click', this.hideSpoiler, false);
+			newButton.firstChild.addEventListener('click', this.hideSpoiler.bind(this, spoilers[i]), false);
 			spoilers[i].firstChild.appendChild(newButton);
 		}
 	},
 
-	hideSpoiler: function() {
-		this.parentNode.parentNode.style.display = 'none';
+	hideSpoiler: function(quoteContent) {
+		quoteContent.firstChild.style.display = 'none';
+		quoteContent.previousSibling.children[1].value = 'Show';
 	}
 };
 
