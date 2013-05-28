@@ -2,7 +2,7 @@
 // @name Multiquote for the One True Forum
 // @description Changes quote buttons behaviour to quote multiple messages
 // @author Pikrass
-// @version 1423
+// @version 1674
 // @resource quote_waiting imgs/quote_waiting.png
 // @resource quote_ok imgs/quote_ok.png
 // @include http://forums.xkcd.com/viewtopic.php*
@@ -25,20 +25,25 @@ multiquote = {
 			var link = buttons[i].firstChild;
 			link.quoteUrl = link.href;
 			link.href = 'javascript:;';
-			link.addEventListener('click', this.quote.bind(this, link), false);
+			link.eventListener = this.quote.bind(this, link);
+			link.addEventListener('click', link.eventListener, false);
 		}
 	},
 
 	quote: function(link) {
+		var postbody = this.findAncestorByClass(link, 'postbody');
+
+		link.removeEventListener('click', link.eventListener);
+		link.eventListener = this.hideReplyArea.bind(this, link, postbody);
+		link.addEventListener('click', link.eventListener, false);
+
 		var req = new XMLHttpRequest();
 		req.addEventListener('load', this.addQuote.bind(this, req, link));
 		req.open('get', link.quoteUrl, true);
 		req.send();
 		link.style.backgroundImage = 'url("'+GM_getResourceURL('quote_waiting')+'")';
 
-		var div = this.findAncestorByClass(link, 'postbody');
-		if(div != null && div.lastChild.className != 'multiquote-reply')
-			this.displayReplyArea(div);
+		this.makeReplyArea(postbody);
 	},
 
 	addQuote: function(req, link) {
@@ -59,9 +64,11 @@ multiquote = {
 		link.style.backgroundImage = 'url("'+GM_getResourceURL('quote_ok')+'")';
 	},
 
-	displayReplyArea: function(div) {
+	makeReplyArea: function(div) {
 		var post = this.findAncestorByClass(div, 'post');
 		var pId = post.id.substr(1);
+
+		var container = document.createElement('div');
 
 		var preDiv = document.createElement('div');
 		preDiv.appendChild(document.createTextNode('Reply:'));
@@ -85,9 +92,27 @@ multiquote = {
 
 		area.addEventListener('keypress', this.onAreaChange.bind(this, area, but));
 
-		div.appendChild(preDiv);
-		div.appendChild(area);
-		div.appendChild(butDiv);
+		container.appendChild(preDiv);
+		container.appendChild(area);
+		container.appendChild(butDiv);
+
+		div.appendChild(container);
+	},
+
+	showReplyArea: function(link, div) {
+		div.lastChild.style.display = '';
+
+		link.removeEventListener('click', link.eventListener);
+		link.eventListener = this.hideReplyArea.bind(this, link, div);
+		link.addEventListener('click', link.eventListener, false);
+	},
+
+	hideReplyArea: function(link, div) {
+		div.lastChild.style.display = 'none';
+
+		link.removeEventListener('click', link.eventListener);
+		link.eventListener = this.showReplyArea.bind(this, link, div);
+		link.addEventListener('click', link.eventListener, false);
 	},
 
 	onAreaChange: function(area, but) {
