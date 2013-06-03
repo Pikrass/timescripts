@@ -2,7 +2,7 @@
 // @name Timescripts
 // @description Collection of scripts for the One True Thread
 // @author Pikrass
-// @version 1097
+// @version 1814
 // @require newpix-convertor.user.js
 // @require spoiler-detector.user.js
 // @require multiquote.user.js

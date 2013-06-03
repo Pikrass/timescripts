@@ -3,7 +3,7 @@
 // @description Converts phpBB dates into the One Time Unit: the newpix.
 // @author Pikrass
 // @author Smithers
-// @version 1220
+// @version 1814
 // @include http://forums.xkcd.com/viewtopic.php*
 // @include http://fora.xkcd.com/viewtopic.php*
 // @include http://forums.xkcd.com/posting.php*
@@ -15,6 +15,10 @@ newpixConvertor = {
 	decimals: 2,
 
 	convert: function() {
+		// Check if we're on the One True Thread
+		if(document.title.indexOf('1190: "Time"') == -1)
+			return;
+
 		var i, j;
 
 		// Convert original post times.
@@ -115,5 +119,4 @@ newpixConvertor = {
 	}
 };
 
-if(location.search.indexOf('f=7') != -1 && location.search.indexOf('t=101043') != -1)
-	window.addEventListener('DOMContentLoaded', newpixConvertor.convert.bind(newpixConvertor));
+window.addEventListener('DOMContentLoaded', newpixConvertor.convert.bind(newpixConvertor));
