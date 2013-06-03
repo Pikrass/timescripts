@@ -27,7 +27,7 @@ newpixConvertor = {
 		var edits = document.getElementsByClassName('notice');
 		for (i = 0; i < edits.length; i++) {
 			var str = edits[i].lastChild.data;
-			var comma = str.indexOf(',');
+			var comma = str.lastIndexOf(',');
 			edits[i].lastChild.data = ' at ' + this.hereticToReal(str.substr(4, comma-4)) + str.substr(comma);
 		}
 
