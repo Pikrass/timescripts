@@ -74,6 +74,7 @@ end
 
 
 $count = 0
+msgId = ''
 
 nbPages = 810
 i = 0
@@ -141,6 +142,8 @@ elsif $count == 1
 else
 	puts "All open parens have been closed!"
 end
+
+puts "Last post was #{msgId}"
 
 updateProgressMeter nbPages, nbPages
 print "\n"
