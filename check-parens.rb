@@ -6,7 +6,7 @@ require 'nokogiri'
 
 def parse content, page, id
 	content.children.each do |c|
-		if c.element? && c.description.name != 'blockquote'
+		if c.element? && c.description.name != 'blockquote' && c.get_attribute('class') != 'codebox'
 			parse c, page, id
 		end
 
