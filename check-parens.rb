@@ -81,7 +81,7 @@ nbPages.times do |i|
 	savedCount = $count
 
 	doc.css('.postbody').each do |msg|
-		msgId = msg.parent.get_attribute('id')
+		msgId = msg.parent.parent.get_attribute('id')
 		msgContent = msg.css('.content').first
 		postCount += 1
 
