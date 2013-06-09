@@ -94,8 +94,10 @@ nbPages.times do |i|
 	end
 end
 
-if $count > 0
+if $count > 1
 	puts "There are #{$count} unmatched open parens."
+elsif $count == 1
+	puts "There is #{$count} unmatched open paren."
 else
 	puts "All open parens have been closed!"
 end
