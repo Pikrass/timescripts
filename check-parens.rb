@@ -31,9 +31,43 @@ def findParens str, page, id
 	end
 end
 
+
+
+def updateProgressMeter i, total
+	width = ENV['COLUMNS'].to_i > 0 ? ENV['COLUMNS'] : `tput cols`.to_i
+	width = [width, 100].min
+
+	barWidth = width - (total.to_s.length * 2) - 7
+	if barWidth >= 3
+		completed = barWidth * i / total
+
+		$stderr.print '|'
+
+		completed.times do |i|
+			if i < completed-1
+				$stderr.print '='
+			else
+				$stderr.print '>'
+			end
+		end
+
+		(barWidth-completed).times do
+			$stderr.print ' '
+		end
+
+		$stderr.print "|  #{i} / #{total}\r"
+	end
+end
+
+
+
 $count = 0
 
-2.times do |i|
+nbPages = 10
+
+nbPages.times do |i|
+	updateProgressMeter i, nbPages
+
 	page = RestClient.get "http://fora.xkcd.com/viewtopic.php?f=7&t=101043&start=#{i*40}"
 
 	if page.code != 200
@@ -65,3 +99,5 @@ if $count > 0
 else
 	puts "All open parens have been closed!"
 end
+
+updateProgressMeter nbPages, nbPages
