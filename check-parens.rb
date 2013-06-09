@@ -81,7 +81,30 @@ i = 0
 while i < nbPages do
 	updateProgressMeter i, nbPages
 
-	page = RestClient.get "http://fora.xkcd.com/viewtopic.php?f=7&t=101043&start=#{i*40}"
+	tries = 0
+	giving_up = false
+
+	while true
+		begin
+			page = RestClient.get "http://fora.xkcd.com/viewtopic.php?f=7&t=101043&start=#{i*40}"
+			break
+		rescue RestClient::RequestTimeout
+			$stderr.puts "Timeout while getting page #{i+1}. Open paren count is #{$count}"
+			tries += 1
+			if tries == 5
+				giving_up = true
+				break
+			else
+				sleep 3
+				next
+			end
+		end
+	end
+
+	if giving_up
+		$stderr.puts "Giving up."
+		break
+	end
 
 	if page.code != 200
 		$stderr.puts "Failed to get page #{i+1}. Open paren count is #{$count}."
