@@ -59,6 +59,18 @@ def updateProgressMeter i, total
 	end
 end
 
+def puts str
+	width = ENV['COLUMNS'].to_i > 0 ? ENV['COLUMNS'] : `tput cols`.to_i
+	width = [width, 100].min
+
+	print str
+	(width - str.length).times do
+		print ' '
+	end
+
+	print "\n"
+end
+
 
 
 $count = 0
@@ -103,3 +115,4 @@ else
 end
 
 updateProgressMeter nbPages, nbPages
+print "\n"
