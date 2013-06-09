@@ -75,9 +75,10 @@ end
 
 $count = 0
 
-nbPages = 10
+nbPages = 810
+i = 0
 
-nbPages.times do |i|
+while i < nbPages do
 	updateProgressMeter i, nbPages
 
 	page = RestClient.get "http://fora.xkcd.com/viewtopic.php?f=7&t=101043&start=#{i*40}"
@@ -86,6 +87,8 @@ nbPages.times do |i|
 		$stderr.puts "Failed to get page #{i+1}. Open paren count is #{$count}."
 		break
 	end
+
+	nbPages = page.match('Page <strong>\d+</strong> of <strong>(\d+)</strong>')[1].to_i
 
 	doc = Nokogiri::HTML(page)
 
@@ -100,10 +103,12 @@ nbPages.times do |i|
 		parse msgContent, i+1, msgId
 	end
 
-	if postCount != 40
+	if postCount != 40 && i < nbPages - 1
 		$stderr.puts "Retrieved only #{postCount} from page #{i+1}. Open paren count was #{savedCount} before this page."
 		break
 	end
+
+	i += 1
 end
 
 if $count > 1
