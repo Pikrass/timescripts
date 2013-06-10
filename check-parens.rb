@@ -87,7 +87,7 @@ end
 $count = 0
 msgId = ''
 
-nbPages = 810
+nbPages = 1
 i = 0
 
 f3 = IO.new 3, 'w' rescue nil
@@ -95,8 +95,6 @@ $totChars = 0
 $enclosedChars = 0
 
 while i < nbPages do
-	updateProgressMeter i, nbPages
-
 	tries = 0
 	giving_up = false
 
@@ -128,6 +126,8 @@ while i < nbPages do
 	end
 
 	nbPages = page.match('Page <strong>\d+</strong> of <strong>(\d+)</strong>')[1].to_i
+
+	updateProgressMeter i, nbPages
 
 	doc = Nokogiri::HTML(page)
 
