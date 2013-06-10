@@ -33,6 +33,9 @@ def findParens str
 			else
 				unmatched += 1
 			end
+		else
+			$totChars += 1
+			$enclosedChars += 1 if $count > 0
 		end
 	end
 
@@ -86,6 +89,10 @@ msgId = ''
 
 nbPages = 810
 i = 0
+
+f3 = IO.new 3, 'w' rescue nil
+$totChars = 0
+$enclosedChars = 0
 
 while i < nbPages do
 	updateProgressMeter i, nbPages
@@ -158,3 +165,8 @@ puts "Last post was #{msgId}"
 
 updateProgressMeter nbPages, nbPages
 print "\n"
+
+if not f3.nil?
+	percent = (100 * $enclosedChars.to_f / $totChars.to_f).round 2
+	f3.puts "#{percent}% of the OTT is enclosed in parenthesis (#{$enclosedChars} out of #{$totChars} characters)."
+end
