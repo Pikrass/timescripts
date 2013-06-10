@@ -4,19 +4,25 @@
 require 'restclient'
 require 'nokogiri'
 
-def parse content, page, id
+def parse content
+	unmatched = 0
+
 	content.children.each do |c|
 		if c.element? && c.description.name != 'blockquote' && c.get_attribute('class') != 'codebox'
-			parse c, page, id
+			parse c
 		end
 
 		if c.text?
-			findParens c.content, page, id
+			unmatched += findParens c.content
 		end
 	end
+
+	return unmatched
 end
 
-def findParens str, page, id
+def findParens str
+	unmatched = 0
+
 	str.each_char do |char|
 		case char
 		when '('
@@ -25,10 +31,12 @@ def findParens str, page, id
 			if $count > 0
 				$count -= 1
 			else
-				puts "Unmatched close paren in newpage #{page}, post #{id}"
+				unmatched += 1
 			end
 		end
 	end
+
+	return unmatched
 end
 
 
@@ -124,7 +132,10 @@ while i < nbPages do
 		msgContent = msg.css('.content').first
 		postCount += 1
 
-		parse msgContent, i+1, msgId
+		unmatched = parse msgContent
+		if unmatched > 0
+			puts "#{unmatched} unmatched close parenthesis in newpage #{i+1}, post #{msgId}"
+		end
 	end
 
 	if postCount != 40 && i < nbPages - 1
