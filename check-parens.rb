@@ -6,6 +6,7 @@ require 'nokogiri'
 
 def parse content
 	unmatched = 0
+	min = $count
 
 	content.children.each do |c|
 		if c.element? && c.description.name != 'blockquote' && c.get_attribute('class') != 'codebox'
@@ -13,15 +14,18 @@ def parse content
 		end
 
 		if c.text?
-			unmatched += findParens c.content
+			res = findParens c.content
+			unmatched += res[0]
+			min = res[1] if res[1] < min
 		end
 	end
 
-	return unmatched
+	[ unmatched, min ]
 end
 
 def findParens str
 	unmatched = 0
+	min = $count
 
 	str.each_char do |char|
 		case char
@@ -30,6 +34,7 @@ def findParens str
 		when ')'
 			if $count > 0
 				$count -= 1
+				min = $count if $count < min
 			else
 				unmatched += 1
 			end
@@ -39,7 +44,23 @@ def findParens str
 		end
 	end
 
-	return unmatched
+	[ unmatched, min ]
+end
+
+
+
+$lastLevel = {:level => 0, :intv => nil}
+def logParenLevel lvl, msg
+	return if $f3.nil?
+
+	$lastLevel[:intv] = msg..msg if $lastLevel[:intv].nil?
+
+	if $lastLevel[:level] == lvl
+		$lastLevel[:intv] = $lastLevel[:intv].min..msg
+	else
+		$f3.puts "#{$lastLevel[:level]} #{$lastLevel[:intv].min} #{$lastLevel[:intv].max}"
+		$lastLevel = {:level => lvl, :intv => msg..msg}
+	end
 end
 
 
@@ -90,7 +111,7 @@ msgId = ''
 nbPages = 1
 i = 0
 
-f3 = IO.new 3, 'w' rescue nil
+$f3 = IO.new 3, 'w' rescue nil
 $totChars = 0
 $enclosedChars = 0
 
@@ -139,10 +160,12 @@ while i < nbPages do
 		msgContent = msg.css('.content').first
 		postCount += 1
 
-		unmatched = parse msgContent
+		unmatched, parenLevel = parse msgContent
 		if unmatched > 0
 			puts "#{unmatched} unmatched close parenthesis in newpage #{i+1}, post #{msgId}"
 		end
+
+		logParenLevel parenLevel, i*40 + postCount
 	end
 
 	if postCount != 40 && i < nbPages - 1
@@ -166,7 +189,8 @@ puts "Last post was #{msgId}"
 updateProgressMeter nbPages, nbPages
 print "\n"
 
-if not f3.nil?
+if not $f3.nil?
+	$f3.puts "#{$lastLevel[:level]} #{$lastLevel[:intv].min} #{$lastLevel[:intv].max}"
 	percent = (100 * $enclosedChars.to_f / $totChars.to_f).round 2
-	f3.puts "#{percent}% of the OTT is enclosed in parenthesis (#{$enclosedChars} out of #{$totChars} characters)."
+	$f3.puts "#{percent}% of the OTT is enclosed in parenthesis (#{$enclosedChars} out of #{$totChars} characters)."
 end
