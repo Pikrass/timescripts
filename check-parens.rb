@@ -23,24 +23,37 @@ def parse content
 	[ unmatched, min ]
 end
 
+
+$smilies = [ ':)', ':-)', ';)', ';-)', ":')", ":'-)" ]
+$smilies.concat( $smilies.map { |s| s.gsub ')', '(' } )
+
+def testSmilies str
+	str.end_with? *$smilies
+end
+
 def findParens str
 	unmatched = 0
 	min = $count
 
+	prev = '     '
+
 	str.each_char do |char|
-		case char
-		when '('
+		prev = prev[1..4] + char
+
+		if (char != '(' && char != ')') || testSmilies(prev)
+			$totChars += 1
+			$enclosedChars += 1 if $count > 0
+
+		elsif char == '('
 			$count += 1
-		when ')'
+
+		elsif char == ')'
 			if $count > 0
 				$count -= 1
 				min = $count if $count < min
 			else
 				unmatched += 1
 			end
-		else
-			$totChars += 1
-			$enclosedChars += 1 if $count > 0
 		end
 	end
 
