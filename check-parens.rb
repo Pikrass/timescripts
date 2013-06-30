@@ -4,17 +4,17 @@
 require 'restclient'
 require 'nokogiri'
 
-def parse content
+def parse content, id
 	unmatched = 0
 	min = $count
 
 	content.children.each do |c|
 		if c.element? && c.description.name != 'blockquote' && c.get_attribute('class') != 'codebox'
-			parse c
+			parse c, id
 		end
 
 		if c.text?
-			res = findParens c.content
+			res = findParens c.content, id
 			unmatched += res[0]
 			min = res[1] if res[1] < min
 		end
@@ -26,12 +26,14 @@ end
 
 $smilies = [ ':)', ':-)', ';)', ';-)', ":')", ":'-)" ]
 $smilies.concat( $smilies.map { |s| s.gsub ')', '(' } )
+$ignoreSmilies = [ 'p3302047' ]
 
-def testSmilies str
+def testSmilies str, id
+	return false if $ignoreSmilies.include? id
 	str.end_with? *$smilies
 end
 
-def findParens str
+def findParens str, id
 	unmatched = 0
 	min = $count
 
@@ -40,7 +42,7 @@ def findParens str
 	str.each_char do |char|
 		prev = prev[1..4] + char
 
-		if (char != '(' && char != ')') || testSmilies(prev)
+		if (char != '(' && char != ')') || testSmilies(prev, id)
 			$totChars += 1
 			$enclosedChars += 1 if $count > 0
 
@@ -173,7 +175,7 @@ while i < nbPages do
 		msgContent = msg.css('.content').first
 		postCount += 1
 
-		unmatched, parenLevel = parse msgContent
+		unmatched, parenLevel = parse msgContent, msgId
 		if unmatched > 0
 			puts "#{unmatched} unmatched close parenthesis in newpage #{i+1}, post #{msgId}"
 		end
