@@ -135,6 +135,7 @@ while i < nbPages do
 	giving_up = false
 
 	while true
+		Kernel.sleep 1
 		begin
 			page = RestClient.get "http://fora.xkcd.com/viewtopic.php?f=7&t=101043&start=#{i*40}"
 			break
