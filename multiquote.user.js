@@ -185,5 +185,5 @@ multiquote = {
 
 if(location.href.indexOf('viewtopic') != -1)
 	window.addEventListener('DOMContentLoaded', multiquote.convert.bind(multiquote));
-if(location.href.indexOf('posting') != -1)
+if(location.href.indexOf('posting') != -1 && location.href.indexOf('mode=edit') == -1)
 	window.addEventListener('DOMContentLoaded', multiquote.dumpQuotes.bind(multiquote));
